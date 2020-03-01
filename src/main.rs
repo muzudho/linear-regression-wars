@@ -9,6 +9,7 @@ extern crate serde_json;
 
 use rand::seq::SliceRandom;
 use serde::Deserialize;
+use std::cmp;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::Read;
@@ -139,18 +140,44 @@ fn main() {
 
     // Battle.
     // とりあえず繰り返せだぜ☆（＾～＾）
-    for _i_time in 0..10 {
-        // 戦闘の１０車両が弾を撃てだぜ☆（＾～＾）
-        for i_front_line in 0..10 {
-            // とりあえず、１車両目が弾撃てだぜ☆（＾～＾）
-            for (i_player, i_opponent) in [(player1, player2), (player2, player1)].iter() {
-                // TODO 残数判定☆（＾～＾）
-                let shot = player_tanks[*i_player][i_front_line].shot;
+    for i_time in 0..100 {
+        println!("Trace   | time={}", i_time);
+        // 両陣営☆（＾～＾）
+        for (i_player, i_opponent) in [(player1, player2), (player2, player1)].iter() {
+            print!(
+                "Trace   | {}'s attack!",
+                &linear_regression_wars.fighting_nations[*i_player].name
+            );
+            // 戦闘の１０車両が弾を撃てだぜ☆（＾～＾）
+            let mut sum_shot = 0;
+            for i_front_line in 0..cmp::min(10, player_tanks[*i_player].len()) {
+                // 撃てる弾数を集計☆（＾～＾）
+                let attacker_tank = &player_tanks[*i_player][i_front_line];
+                let shot = if attacker_tank.balls < attacker_tank.shot {
+                    attacker_tank.balls
+                } else {
+                    attacker_tank.shot
+                };
+                print!(" {}", shot);
                 player_tanks[*i_player][i_front_line].balls -= shot;
+                sum_shot += shot;
+            }
 
-                for i_target in i_front_line..(i_front_line + shot as usize) {
-                    let mut target_tank = &mut player_tanks[*i_opponent][i_target as usize];
-                    target_tank.hit_point -= 1;
+            println!(".");
+
+            // 弾が当たるぜ☆（＾～＾）
+            let mut i_target = 0;
+            for _i_shot in 0..sum_shot {
+                if player_tanks[*i_opponent].len() <= i_target {
+                    break;
+                }
+                // println!("Trace   | target={}", i_target);
+                let mut target_tank = &mut player_tanks[*i_opponent][i_target as usize];
+                target_tank.hit_point -= 1;
+                if cmp::min(9, player_tanks[*i_opponent].len()) <= i_target {
+                    i_target = 0;
+                } else {
+                    i_target += 1;
                 }
             }
         }
