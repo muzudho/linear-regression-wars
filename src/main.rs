@@ -140,10 +140,17 @@ fn main() {
 
     // Battle.
     // とりあえず繰り返せだぜ☆（＾～＾）
+    let mut is_game_end = false;
     for i_time in 0..100 {
         println!("Trace   | time={}", i_time);
         // 両陣営☆（＾～＾）
         for (i_player, i_opponent) in [(player1, player2), (player2, player1)].iter() {
+            // Annihilation. (全滅)
+            if player_tanks[*i_player].is_empty() {
+                is_game_end = true;
+                break;
+            }
+
             print!(
                 "Trace   | {}'s attack!",
                 &linear_regression_wars.fighting_nations[*i_player].name
@@ -163,7 +170,9 @@ fn main() {
                 sum_shot += shot;
             }
 
-            println!(".");
+            println!(" ={}.", sum_shot);
+
+            // TODO 弾が尽きたときのローテンション処理を書く☆（＾～＾）
 
             // 弾が当たるぜ☆（＾～＾）
             let mut i_target = 0;
@@ -185,6 +194,10 @@ fn main() {
         // HPが0より大きい車両だけ残すぜ☆（＾～＾）
         for i_player in [player1, player2].iter() {
             player_tanks[*i_player].retain(|x| 0 < x.hit_point);
+        }
+
+        if is_game_end {
+            break;
         }
     }
 
