@@ -3,9 +3,11 @@
 //! [Rust】serde_jsonの使い方](https://www.amusement-creators.info/post/articles/advent_calendar/2019/02_0/)
 //! [Serialize fields as camelCase](https://serde.rs/attr-rename.html)
 //!
+extern crate rand;
 extern crate serde;
 extern crate serde_json;
 
+use rand::seq::SliceRandom;
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::fs::File;
@@ -33,9 +35,9 @@ struct Tank {
 }
 
 struct GameTank {
-    hit_point: i8,
-    shot: i8,
-    balls: i8,
+    pub hit_point: i8,
+    pub shot: i8,
+    pub balls: i8,
 }
 impl GameTank {
     pub fn new(hit_point1: i8, shot1: i8, balls1: i8) -> Self {
@@ -108,6 +110,7 @@ fn main() {
     let player2 = 1usize;
 
     // New game.
+    let mut rng = rand::thread_rng();
     let tank_names = ["tako2000", "tako3000", "tako5000"];
     let mut player_tanks = [Vec::<GameTank>::new(), Vec::<GameTank>::new()];
     for i_player in [player1, player2].iter() {
@@ -120,6 +123,41 @@ fn main() {
                 let tank = create_tank(tank_name, &magazine);
                 player_tanks[*i_player].push(tank);
             }
+        }
+
+        player_tanks[*i_player].shuffle(&mut rng);
+    }
+
+    // とりあえず情報☆（＾～＾）
+    println!(
+        "Info    | player[{}] tanks={}. player[{}] tanks={}.",
+        player1,
+        player_tanks[player1].len(),
+        player2,
+        player_tanks[player2].len()
+    );
+
+    // Battle.
+    // とりあえず繰り返せだぜ☆（＾～＾）
+    for _i_time in 0..10 {
+        // 戦闘の１０車両が弾を撃てだぜ☆（＾～＾）
+        for i_front_line in 0..10 {
+            // とりあえず、１車両目が弾撃てだぜ☆（＾～＾）
+            for (i_player, i_opponent) in [(player1, player2), (player2, player1)].iter() {
+                // TODO 残数判定☆（＾～＾）
+                let shot = player_tanks[*i_player][i_front_line].shot;
+                player_tanks[*i_player][i_front_line].balls -= shot;
+
+                for i_target in i_front_line..(i_front_line + shot as usize) {
+                    let mut target_tank = &mut player_tanks[*i_opponent][i_target as usize];
+                    target_tank.hit_point -= 1;
+                }
+            }
+        }
+
+        // HPが0より大きい車両だけ残すぜ☆（＾～＾）
+        for i_player in [player1, player2].iter() {
+            player_tanks[*i_player].retain(|x| 0 < x.hit_point);
         }
     }
 
