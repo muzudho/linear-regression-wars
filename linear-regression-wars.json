@@ -24,9 +24,34 @@
             }
         },
         {
-            "name": "Oton-kingdom-1",
+            "name": "Oton-kingdom-20200301-2222",
             "comment": [
-                "チビタコでバンバン撃つぜ☆（＾～＾）"
+                "チビタコでバンバン撃つぜ☆（＾～＾）",
+                "弾数の密度も増やそうぜ☆（＾～＾）？"
+            ],
+            "win": 770,
+            "draw": 0,
+            "lose": 1230,
+            "tanks": {
+                "tako2000": {
+                    "number": 286,
+                    "magazine": "grape5x4-hole2"
+                },
+                "tako3000": {
+                    "number": 19,
+                    "magazine": "grape2x4-hole1"
+                },
+                "tako5000": {
+                    "number": 10,
+                    "magazine": "grape5x3-hole3"
+                }
+            }
+        },
+        {
+            "name": "Oton-kingdom-20200301-2221",
+            "comment": [
+                "チビタコでバンバン撃つぜ☆（＾～＾）",
+                "弾幕薄くて負けてしまう……☆（＾～＾）"
             ],
             "win": 770,
             "draw": 0,
