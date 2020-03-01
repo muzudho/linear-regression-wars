@@ -1,0 +1,50 @@
+{
+    "fightingNations": [
+        {
+            "name": "Kifuwara-kingdom-1",
+            "comment": [
+                "性能のいいやつが強いだろ☆（＾～＾）"
+            ],
+            "win": 1230,
+            "draw": 0,
+            "lose": 770,
+            "tanks": {
+                "tako2000": {
+                    "number": 200,
+                    "magazine": "grape5x3-hole3"
+                },
+                "tako3000": {
+                    "number": 60,
+                    "magazine": "grape2x4-hole1"
+                },
+                "tako5000": {
+                    "number": 40,
+                    "magazine": "grape5x3-hole3"
+                }
+            }
+        },
+        {
+            "name": "Oton-kingdom-1",
+            "comment": [
+                "チビタコでバンバン撃つぜ☆（＾～＾）"
+            ],
+            "win": 770,
+            "draw": 0,
+            "lose": 1230,
+            "tanks": {
+                "tako2000": {
+                    "number": 420,
+                    "magazine": "grape2x4-hole1"
+                },
+                "tako3000": {
+                    "number": 19,
+                    "magazine": "grape5x4-hole2"
+                },
+                "tako5000": {
+                    "number": 10,
+                    "magazine": "grape5x3-hole3"
+                }
+            }
+        }
+    ]
+}
